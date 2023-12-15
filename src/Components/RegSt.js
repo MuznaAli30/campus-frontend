@@ -45,12 +45,67 @@ export default function RegSt() {
     // { label: <><i className="fa-solid fa-right-from-bracket fa-rotate-180"></i>  Log Out</>, path: '/Login' },
   ];
   const openTooltip = sidebarOpen ? 'Close Sidebar' : 'Open Sidebar';
+//mineeee
+  // const profileSumbit = async (e) => {
+  //   console.log("file", fileLink)
+  //   e.preventDefault();
+  //   console.log("info", e)
+  //   console.log("id",name, fatherName, contact, fileLink)
+  //   try {
+  //     const formData = new FormData();
+  
+  //     // Append the file to the FormData
+  //     formData.append('file', fileLink);
+  
+  //     // Append other data to the FormData
+  //     formData.append('name', name);
+  //     formData.append('fatherName', fatherName);
+  //     formData.append('contact', contact);
+  //     console.log("msg", formData)
+  //     // Make the axios request with the FormData
+  //     const response = await axios.put(`${Api}/student/updtStd/${params.id}`, formData);
+  
+  //     // Handle the response as needed
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     // Handle errors
+  //     console.error('Error uploading file:', error);
+  //   }
+  //   console.log("id",name, fatherName, contact)
+  //   toast.success('Updated successfully!');
+  //   // setName(''); setFatherName(''); setContact(''); setFileLink(null);
+  // }
 
+
+  //for check
   const profileSumbit = async (e) => {
-    console.log("file", fileLink)
     e.preventDefault();
-    console.log("info", e)
-    console.log("id",name, fatherName, contact, fileLink)
+    console.log('Fields:', name, fatherName, contact, fileLink);
+
+    // Validation for non-empty fields
+    if (!name || !fatherName || !contact || !fileLink) {
+      toast.error('Please fill out all the fields');
+      return;
+    }
+  
+    // Validation checks for Name and Father Name
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+      toast.error('Name should contain only letters and spaces');
+      return;
+    }
+  
+    if (!/^[a-zA-Z\s]+$/.test(fatherName)) {
+      toast.error('Father Name should contain only letters and spaces');
+      return;
+    }
+  
+    // Validation check for Contact Number
+    const contactRegex = /^[0-9]{11}$/;
+    if (!contactRegex.test(contact)) {
+      toast.error('Please enter a valid 10-digit contact number');
+      return;
+    }
+  
     try {
       const formData = new FormData();
   
@@ -61,20 +116,27 @@ export default function RegSt() {
       formData.append('name', name);
       formData.append('fatherName', fatherName);
       formData.append('contact', contact);
-      console.log("msg", formData)
+  
       // Make the axios request with the FormData
       const response = await axios.put(`${Api}/student/updtStd/${params.id}`, formData);
   
       // Handle the response as needed
       console.log(response.data);
+      toast.success('Updated successfully!');
+      
+      // Clear form fields after successful submission
+      setName('');
+      setFatherName('');
+      setContact('');
+      setFileLink(null);
     } catch (error) {
       // Handle errors
       console.error('Error uploading file:', error);
+      toast.error('Error updating. Please try again.');
     }
-    console.log("id",name, fatherName, contact)
-    toast.success('Updated successfully!');
-    // setName(''); setFatherName(''); setContact(''); setFileLink(null);
-  }
+  };
+
+  
   const xyz = (abc)=>{
     console.log("helo",abc.target.files[0])
     setFileLink(abc.target.files[0])

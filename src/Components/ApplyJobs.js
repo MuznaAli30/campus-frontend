@@ -45,79 +45,79 @@ export default function ApplyJobs() {
 
 
 // minee
-  useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(`${Api}/student/singleStd/${params.id}`);
-            setSetApplicantName(response.data.contact.name)
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+//   useEffect(() => {
+//     const fetchData = async () => {
+//         try {
+//             const response = await axios.get(`${Api}/student/singleStd/${params.id}`);
+//             setSetApplicantName(response.data.contact.name)
+//         } catch (error) {
+//             console.error('Error fetching data:', error);
+//         }
+//     };
 
 
-    fetchData();
-}, []);
-
-
-
-// useEffect(() => {
-//  const fetchData = async () => {
-//      try {
-//          const response = await axios.get(`${Api}/job/alljob`);
-//          setData(response.data);
-        
-//          // Retrieve applied jobs from local storage if available
-//          const storedAppliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
-//          setAppliedJobs(storedAppliedJobs);
-//      } catch (error) {
-//          console.error('Error fetching data:', error);
-//      }
-//  };
-//  fetchData();
+//     fetchData();
 // }, []);
+
+
+
+useEffect(() => {
+ const fetchData = async () => {
+     try {
+         const response = await axios.get(`${Api}/job/alljob`);
+         setData(response.data);
+        
+         // Retrieve applied jobs from local storage if available
+         const storedAppliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
+         setAppliedJobs(storedAppliedJobs);
+     } catch (error) {
+         console.error('Error fetching data:', error);
+     }
+ };
+ fetchData();
+}, []);
 
 
 
 
 
 // minee
- const ApplyForJob = async (id) => {
-   const applicantData = { id: params.id, name: setApplicantName };
-    try {
-     const response = await axios.put(`${Api}/job/updtjob/${id}`, { applicants: applicantData });
-
-
-     toast.success('Updated successfully!');
-   } catch (error) {
-     console.error('Error updating job:', error);
-     toast.error('Failed to update job');
-   }
- };
-
-
-
-
 //  const ApplyForJob = async (id) => {
 //    const applicantData = { id: params.id, name: setApplicantName };
+//     try {
+//      const response = await axios.put(`${Api}/job/updtjob/${id}`, { applicants: applicantData });
 
 
-//    try {
-//        await axios.put(`${Api}/job/updtjob/${id}`, { applicants: applicantData });
-//        toast.success('Updated successfully!');
-
-
-//        // Update the appliedJobs state with the new job ID
-//        const updatedAppliedJobs = [...appliedJobs, id];
-//        setAppliedJobs(updatedAppliedJobs);
-      
-//        // Store the updated applied jobs in local storage
-//        localStorage.setItem('appliedJobs', JSON.stringify(updatedAppliedJobs));
+//      toast.success('Updated successfully!');
 //    } catch (error) {
-//        console.error('Error updating job:', error);
-//        toast.error('Failed to update job');
+//      console.error('Error updating job:', error);
+//      toast.error('Failed to update job');
 //    }
-// };
+//  };
+
+
+
+
+ const ApplyForJob = async (id) => {
+   const applicantData = { id: params.id, name: setApplicantName };
+
+
+   try {
+       await axios.put(`${Api}/job/updtjob/${id}`, { applicants: applicantData });
+       toast.success('Updated successfully!');
+
+
+       // Update the appliedJobs state with the new job ID
+       const updatedAppliedJobs = [...appliedJobs, id];
+       setAppliedJobs(updatedAppliedJobs);
+      
+       // Store the updated applied jobs in local storage
+       localStorage.setItem('appliedJobs', JSON.stringify(updatedAppliedJobs));
+   } catch (error) {
+       console.error('Error updating job:', error);
+       toast.error('Failed to update job');
+   }
+};
 
 
 
@@ -166,7 +166,7 @@ export default function ApplyJobs() {
          <div className="w-full p-4 bg-white mb-10 rounded shadow ml-64 max-sm:ml-12">
            <h3 className="text-xl font-semibold mb-4 text-center max-sm:text-sm"><i className="fa-solid fa-briefcase"></i> Apply Jobs </h3>
       {/* minee      */}
- {data.map((dataa, index) => (
+ {/* {data.map((dataa, index) => (
              <div key={index}>
                <p>Job Title: {dataa.jobTitle}</p>
                <p>Description: {dataa.jobDescription}</p>
@@ -178,10 +178,10 @@ export default function ApplyJobs() {
                </button>
                <br />
              </div>
-           ))} 
+           ))}  */}
 
 
-{/* {data.map((dataa, index) => (
+{data.map((dataa, index) => (
    <div key={index}>
        <p>Job Title: {dataa.jobTitle}</p>
        <p>Description: {dataa.jobDescription}</p>
@@ -195,7 +195,7 @@ export default function ApplyJobs() {
        </button>
        <br />
    </div>
-))} */}
+))}
          </div>
        </div>
      </div>

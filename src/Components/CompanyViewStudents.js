@@ -21,7 +21,7 @@ export default function CompanyViewStudents() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await axios.get(`${Api}/registration/allStudents`);
+        // const response = await axios.get(`${Api}/registration/allStudents
         const response = await axios.get(`${Api}/job/alljob`);
         setData(response.data);
         console.log(response.data)
@@ -107,6 +107,7 @@ export default function CompanyViewStudents() {
               {/* <button onClick={() => Deletee(dataa._id)}><i className="text-red-800 fa-solid fa-trash text-46"></i></button> */}
               <p>Job ID : {dataa._id}</p>
               <p>Job Title : <b>{dataa.jobTitle}</b></p>
+              <p>Job Description : <b>{dataa.jobDescription}</b></p>
 
               <p>-----------------------</p>
               <ol>
@@ -114,16 +115,15 @@ export default function CompanyViewStudents() {
                   <li key={appIndex}>
                    
                       <div>
-                        {/* <span>ID: {applicant.id}</span> | */}
+                        <span>ID: {applicant.id}</span> |
                          <span>Name: {applicant.name}</span> | 
-                        <span>Resume: <a href={applicant.fileLink} target="_blank" rel="noopener noreferrer">View Resume</a></span>
+                        <span>Resume: {applicant.fileLink}</span>
  
                     </div>
                   </li>
                 ))}
               </ol>
               <br />
-              <p>-----------------------</p>
               <p>-----------------------</p>
               <p>-----------------------</p>
             </div>

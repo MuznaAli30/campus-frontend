@@ -22,6 +22,15 @@ export default function ChangePassword() {
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
+
+    // Validation for password complexity
+    if (!passwordRegex.test(newPassword)) {
+      toast.error('Password should contain at least 7 characters including at least one uppercase letter, one lowercase letter, one number, and one special character');
+      return;
+    }
+    
     try {
       const responseStudent = await axios.post(`${Api}/registration/changePassword`, { email, oldPassword, newPassword });
       toast.success('Password changed successfully!');

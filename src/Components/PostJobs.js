@@ -32,27 +32,52 @@ export default function PostJobs() {
 
   const openTooltip = sidebarOpen ? 'Close Sidebar' : 'Open Sidebar';
 
-  // Function to handle of posting job
+  // mine
+  // const handlePost = async (e) => {
+  //   e.preventDefault();
+    
+  //   try {
+  //     const response = await axios.post(`${Api}/job/post`, { jobTitle, jobDescription,CompanyID });
+  
+  //     if (response.status === 201) {
+  //       toast.success('Posted successfully!');
+  //       setJobTitle('');
+  //       setJobDescription('');
+  //     } else if (response.status === 500) {
+  //       toast.error('Please fill out all the fileds');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     toast.error('An error occurred while posting the job.');
+  //   }
+  // }
+  
   const handlePost = async (e) => {
     e.preventDefault();
     
+    if (!jobTitle || !jobDescription || !CompanyID) {
+      toast.error('Please fill out all the fields');
+      return; 
+    }
+    
     try {
-      const response = await axios.post(`${Api}/job/post`, { jobTitle, jobDescription,CompanyID });
+      const response = await axios.post(`${Api}/job/post`, { jobTitle, jobDescription, CompanyID });
   
       if (response.status === 201) {
         toast.success('Posted successfully!');
         setJobTitle('');
         setJobDescription('');
       } else if (response.status === 500) {
-        toast.error('Please fill out all the fileds');
+        toast.error('Something went wrong on the server');
       }
     } catch (error) {
       console.error('Error:', error);
       toast.error('An error occurred while posting the job.');
     }
   }
-  
 
+  
+  
   return (
     <div className="flex h-screen relative bg-[url('https://images.unsplash.com/photo-1541323184943-9246488c6f97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')]">
     {/* Sidebar */}

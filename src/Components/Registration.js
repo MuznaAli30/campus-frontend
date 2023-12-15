@@ -29,39 +29,75 @@ const handleLogout =  () => {
     { label: <><i className="fa-solid fa-building"></i> Manage Companies</>, path: "/managecompanies" },
   ];
 //mineee
+  // const handleRegistrationSumbit = async (e) => {
+  //   e.preventDefault();
+   
+  //       const response = await axios.post(`${Api}/registration/signup`, { role, username, email, password});
+  
+  //       toast.success('Registration successful!');
+  //       setRole(''); setUsername(''); setEmail(''); setPassword(''); 
+  // };
+
+
+  
+  //for check
   const handleRegistrationSumbit = async (e) => {
     e.preventDefault();
   
-   
-        const response = await axios.post(`${Api}/registration/signup`, { role, username, email, password});
+    // Regular expressions for validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{7,}$/;
   
+    // Validation checks
+    if (!role || !username || !email || !password) {
+      toast.error('Please fill out all the fields');
+      return;
+    }
+  
+    if (!/^(company|student)$/i.test(role)) {
+      toast.error('Role should be either "company" or "student"');
+      return;
+    }
+  
+    if (!/^[a-zA-Z0-9-]+$/.test(username)) {
+      toast.error('Username should contain only letters, numbers, and hyphens');
+      return;
+    }
+  
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+  
+    if (!passwordRegex.test(password)) {
+      toast.error('Password should contain at least 7 characters including at least one uppercase letter, one lowercase letter, one number, and one special character');
+      return;
+    }
+  
+    try {
+      const response = await axios.post(`${Api}/registration/signup`, {
+        role,
+        username,
+        email,
+        password,
+      });
+  
+      if (response.status === 201) {
         toast.success('Registration successful!');
-        setRole(''); setUsername(''); setEmail(''); setPassword(''); 
+        setRole('');
+        setUsername('');
+        setEmail('');
+        setPassword('');
+      } else {
+        toast.error('Something went wrong during registration');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('An error occurred during registration');
+    }
   };
-
-  //for check
-//   const handleRegistrationSumbit = async (e) => {
-//   e.preventDefault();
-
-//   try {
-//     const response = await axios.post(`${Api}/registration/signup`, { role, username, email, password });
-
-//     if (response.status === 201) {
-//       toast.success('Registration successful!');
-//       setRole('');
-//       setUsername('');
-//       setEmail('');
-//       setPassword('');
-//     } else if (response.status === 400) {
-//       toast.error('Please fill out all the required fields.');
-//     } else {
-//       toast.error('Registration failed. Please try again.');
-//     }
-//   } catch (error) {
-//     console.error('Error:', error);
-//     toast.error('Please fill out all the required fields.');
-//   }
-// };
+  
+  
 
  
   const togglePasswordVisibility = () => {
